@@ -1,4 +1,4 @@
-function  set_preamp(Peaking_time,Pre_Gain)
+function  set_preamp(Peaking_time,Pre_Gain,sc_hw)
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
 % preamp values 
@@ -45,6 +45,6 @@ end
 
         register_data = bitor( bitor(uint16(CAP_PRE),uint16(bitshift(RES_PRE,2)),'uint16'), uint16(bitshift(TP_FE,5)),'uint16');%   bitand( bitshift(instructionWord, -21), hex2dec('1F'))   )
         fprintf("%08s",dec2bin(register_data));
-        write_register(uint32(hex2dec('83')), uint32(register_data));
+        write_register(uint32(hex2dec('83')), uint32(register_data),sc_hw);
 end
 

@@ -2,6 +2,8 @@ clearvars;
 five_ones = de2bi(uint8(hex2dec('1f')),5);
 HDLC_FS = de2bi(uint8(hex2dec('7e')),8)
 HDLC_ADDRESS = de2bi(uint8(hex2dec('00')),8)
+HDLC_CONTROL = de2bi(uint8(hex2dec('03')),8)
+IPBUS_HEADER = de2bi(uint8(hex2dec('03')),32)
 JOINED = horzcat(HDLC_FS,HDLC_ADDRESS)
 ANS = ismember(five_ones,HDLC_FS)
 STR= strfind(JOINED,five_ones)

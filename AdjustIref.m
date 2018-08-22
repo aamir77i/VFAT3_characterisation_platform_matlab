@@ -1,4 +1,4 @@
-function  AdjustIref()
+function [IREF] =  AdjustIref()
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
 %% Adjust IREF 

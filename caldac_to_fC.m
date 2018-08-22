@@ -1,4 +1,4 @@
-function [Lfit_caldac,Lfit_charge,step_fc] = caldac_to_fC(VFAT3_NUMBER)
+function [Lfit_caldac,Lfit_charge,step_fc,cal_dac,charge,A,B] = caldac_to_fC(VFAT3_NUMBER)
 %UNTITLED2 Summary of this function goes here
 %   Detailed explanation goes here
 Cal_dac_to_fc  = [202 255 7 0 1 255 ]';

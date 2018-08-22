@@ -1,12 +1,12 @@
-function [read_data] = write_register(address,data)
+function [read_data] = write_register(address,data,sc_hw)
 %UNTITLED2 Summary of this function goes here
 %   Detailed explanation goes here
 
 %% sc read
 WRITE = uint8(1);
 
-DATA = data;
-sc  = [202 0 1 WRITE 0 0  fliplr(typecast(uint16(address),'uint8')) 0 0 fliplr(typecast(uint16(DATA),'uint8')) ]';
+
+sc  = [202 uint8(sc_hw) 1 WRITE fliplr(typecast(uint32(address),'uint8')) fliplr(typecast(uint32(data),'uint8')) ]';
 
   
 t = tcpip('192.168.1.10',7);

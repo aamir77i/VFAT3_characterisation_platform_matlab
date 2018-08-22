@@ -37,7 +37,7 @@ sync_chip();
 AdjustIref();
 
 %% Cal_dac to fC 
-[Lfit_caldac,Lfit_charge,step_fc]= caldac_to_fC(VFAT3_NUMBER);
+[Lfit_caldac,Lfit_charge,step_fc,cal_dac,charge_injected]= caldac_to_fC(VFAT3_NUMBER);
 
 %% front end settings
 

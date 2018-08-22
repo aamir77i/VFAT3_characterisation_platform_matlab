@@ -97,6 +97,9 @@ mean_enc(i) = std(scurve(i,:));
 end
 
 
+
+
+
 M_O_mean_Th  = mean(mean_th(:));
 M_O_mean_Th_std = std(mean_th(:));
 M_O_mean_ENC = mean(mean_enc(:));

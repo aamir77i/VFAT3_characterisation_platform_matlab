@@ -25,9 +25,9 @@ y_label =  'ArmDac';
 Peaking_time = "45"; % 15 25 36 45 
 Pre_Gain =  "HG"  ;% LG MG HG  
 start_chan = 0 ;stop_chan = 127 ;step_chan = 1 ;
-Latency = uint16(0);
+Latency = uint16(20);
 LV1As   = uint16(1000);
-D1 = uint16(5) ;D2 = uint16(400) ;DELAY = uint8(1);
+D1 = uint16(24) ;D2 = uint16(200) ;DELAY = uint8(1);
 calpulse = uint8(1);
  
 %start_fc = -2.0 2
@@ -36,18 +36,21 @@ calpulse = uint8(1);
 num_of_channels = ( (stop_chan - start_chan)/step_chan)+1;
 %% connect  hard reset chip
 sync_chip();
+SOFT =uint8(0);
+HARD =uint8(255);
+sc_hw = SOFT;
 %% read chip id
- chip_id=strcat('vfat3_',num2str(read_register(hex2dec('10003'))))
+ chip_id=strcat('vfat3-',num2str(read_register(hex2dec('10003'),sc_hw)))
  VFAT3_NUMBER = chip_id;
 %% Adjust IREF 
-AdjustIref();
+[IREF] = AdjustIref();
 
 %% Cal_dac to fC 
-[Lfit_caldac,Lfit_charge,step_fc]= caldac_to_fC(VFAT3_NUMBER);
+[Lfit_caldac,Lfit_charge,step_fc,cal_dac,charge_injected,A,B] = caldac_to_fC(VFAT3_NUMBER);
 Max_Caldac = floor(Lfit_charge(0))
 %% front end settings
  
-set_preamp(Peaking_time,Pre_Gain);
+set_preamp(Peaking_time,Pre_Gain,sc_hw);
 %%
 front_end_default  = [202 255 9 ]';
 t = tcpip('192.168.1.10',7);
@@ -58,18 +61,17 @@ fclose(t);
 
 %%
 Arming_fit = fc_arm_dac(step_fc,Lfit_caldac,leg,x_label,y_label,VFAT3_NUMBER,Pre_Gain,Peaking_time)
-%save ('Arming_fit_100_HG.mat','Arming_fit');
-%load 'Arming_fit_LG_100.mat';
+
 %% clear all trimming registers before running scurves
 for i=0 : 127
-    write_register(i,0);
+    write_register(i,0,sc_hw);
 end
  %%
 
  
 Max_Caldac = floor(Lfit_charge(0));
-start_fc = 0.0 ;
-stop_fc = 10;%Max_Caldac;
+start_fc = 1.0 ;
+stop_fc = 12;%Max_Caldac;
 
 fc_arr = double(start_fc:step_fc:stop_fc)
 fc_size = size(fc_arr,2)
@@ -288,6 +290,8 @@ ylabel 'channel count';
 title 'ENC Histogram '
 grid on;
 grid 'minor';
+
+
 %%
 % % fname = sprintf('test.txt');
 % % save(fname, '-ascii')
@@ -328,15 +332,18 @@ folderName = horzcat('results/',VFAT3_NUMBER,'/',d);% define a folder name for e
 [parentFolder deepestFolder] = fileparts(folderName);
 % Next, create a name for a subfolder within that.
 % For example 'D:\photos\Info\DATA-Info'
-
+saveas(gcf, horzcat(folderName,d,'.png'));
+% scurve folder and file creation
 scurveSubFolder = sprintf('%s/scurve_%s_%s', folderName, deepestFolder,d);% define a scurve subfolder 
 % Finally, create the folder if it doesn't exist already.
 if ~exist(scurveSubFolder, 'dir')
   mkdir(scurveSubFolder);
 end
-
 filename = horzcat(scurveSubFolder,'/scurves_',VFAT3_NUMBER,d,'.txt');
 fileID   = fopen(filename,'w');
+% end scurve folder and file creation
+
+
 
 
 fprintf(fileID,'%12.6f',fc_arr);

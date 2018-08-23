@@ -325,7 +325,7 @@ dead_channels = find(~scurve_store)
 
 
 %%
-folderName = horzcat('results/',VFAT3_NUMBER,'/',d);% define a folder name for every chip programatically
+folderName = horzcat('results/',VFAT3_NUMBER);% define a folder name for every chip programatically
 % First, get the name of the folder you're using.
 % For example if your folder is 'D:\photos\Info', parentFolder  would = 'D:\photos, and deepestFolder would = 'Info'.
 [parentFolder deepestFolder] = fileparts(folderName);
@@ -333,7 +333,7 @@ folderName = horzcat('results/',VFAT3_NUMBER,'/',d);% define a folder name for e
 % For example 'D:\photos\Info\DATA-Info'
 %saveas(gcf, horzcat(folderName,d,'.png'));
 % scurve folder and file creation
-deadchannelsSubFolder = sprintf('%s/dead_channels_%s_%s', folderName, deepestFolder,d);% define a scurve subfolder 
+deadchannelsSubFolder = sprintf('%s/dead_channels', folderName);% define a scurve subfolder 
 % Finally, create the folder if it doesn't exist already.
 if ~exist(deadchannelsSubFolder, 'dir')
   mkdir(deadchannelsSubFolder);
@@ -348,6 +348,7 @@ filename = horzcat(deadchannelsSubFolder,'/deadchannels_',VFAT3_NUMBER,d,'.txt')
 %for i =1 : size(dead_channels,1)
 
 dead_channels(5)=0;
+data= size(dead_channels);
 old_data = data; 
 data = dead_channels;
 if data ~= old_data

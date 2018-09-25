@@ -16,9 +16,9 @@ clearvars;
 %load Arming_fit.mat;
 
 
-leg     = 'Threshold vs. ArmDac';
-x_label =  'Threshold(fC)'; 
-y_label =  'ArmDac';
+% leg     = 'Threshold vs. ArmDac';
+% x_label =  'Threshold(fC)'; 
+% y_label =  'ArmDac';
 
 %load Arming_fit.mat;
 %VFAT3_NUMBER = 'vfat3#3880';
@@ -27,9 +27,11 @@ Pre_Gain =  "HG"  ;% LG MG HG
 start_chan = 0 ;stop_chan = 127 ;step_chan = 1 ;
 Latency = uint16(20);
 LV1As   = uint16(100);
-D1 = uint16(23) ;D2 = uint16(200) ;DELAY = uint8(1);
+D1 = uint16(23);
+D2 = uint16(200);
+DELAY = uint8(1);
 calpulse = uint8(1);
- arm_dac = 100;
+arm_dac = uint8(180);
 %start_fc = -2.0 2
 %stop_fc = 20.0 ;
 
@@ -40,8 +42,9 @@ SOFT =uint8(0);
 HARD =uint8(255);
 sc_hw = SOFT;
 %% read chip id
- chip_id=strcat('vfat3-',num2str(read_register(hex2dec('10003'),sc_hw)))
+ chip_id = strcat('vfat3-',num2str(read_register(hex2dec('00010003'),sc_hw)))
  VFAT3_NUMBER = chip_id;
+% VFAT3_NU  MBER= 'VFAT3-TEST';
 %% Adjust IREF 
 [IREF] = AdjustIref();
 
@@ -70,8 +73,8 @@ fclose(t);
 
  
 Max_Caldac = floor(Lfit_charge(0));
-start_fc = 0.0 ;
-stop_fc = 8;%Max_Caldac;
+start_fc = 10.0 ;
+stop_fc = Max_Caldac;
 
 fc_arr = double(start_fc:step_fc:stop_fc)
 fc_size = size(fc_arr,2)
@@ -81,8 +84,8 @@ dac = uint8(round(Lfit_caldac(fc_arr)))
 
 %Arming_th=6.0;% start arm_dac from 5.0 and go to some criteria
 %arm_dac = uint8(round(Arming_fit(Arming_th)))
-Criteria = 1.0;%fC
-i= 1;
+%Criteria = 1.0;%fC
+%i= 1;
 %
  
 %Arming_th = 2.5;% fC
@@ -178,7 +181,7 @@ text(x2,y2,str2);
 subplot(3,2,3);
 plot (mean_th,'r-x'); 
 
-axis([1 stop_chan 0 12]);
+axis([1 stop_chan start_fc stop_fc]);
 str = ['\mu: ', num2str(round(M_O_mean_Th,3)),'fC (',num2str(round(M_O_mean_Th * 6241.51)),'e)' ];
 text(3,7,str);
 str = ['\sigma:',num2str(round(M_O_mean_Th_std,3)),'fC (',num2str(round(M_O_mean_Th_std* 6241.51)),'e)'];

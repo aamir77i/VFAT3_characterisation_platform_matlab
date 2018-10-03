@@ -22,7 +22,7 @@ function varargout = temperature_calibration(varargin)
 
 % Edit the above text to modify the response to help temperature_calibration
 
-% Last Modified by GUIDE v2.5 21-Sep-2018 16:18:27
+% Last Modified by GUIDE v2.5 25-Sep-2018 15:53:23
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -55,9 +55,10 @@ function temperature_calibration_OpeningFcn(hObject, eventdata, handles, varargi
 handles.output = hObject;
 handles.temp_arr =[];
 handles.voltage_arr =[];
-handles.chip_ID= 'Unknown';
+handles.id = [];
 handles.reply =0;
 set(handles.hard_reset, 'String', 'Not Connected');
+set(handles.id_text, 'String', 'Unknown');
 % Update handles structure
 guidata(hObject, handles);
  
@@ -251,7 +252,7 @@ function pushbutton_reset_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 handles.temp_arr = [];
 handles.voltage_arr = [];
-handles.chip_ID     = 'Unknown';
+handles.id_text     = 'Unknown';
 SampleOut = size(handles.voltage_arr,2);
 set(handles.SampleOut, 'String', SampleOut);
 guidata(hObject,handles)
@@ -261,14 +262,20 @@ function pushbutton_plot_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton_plot (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+if size(handles.temp_arr,2)>=2
 axes(handles.axes1);
 cla;
-VFAT3_NUMBER = num2str(handles.chip_id);
+VFAT3_NUMBER = num2str(handles.id);
 x_label = 'Temperature(C)';
 y_label = 'ADC(mV)';
 title ='SensorOut(mV) vs. Temperature(C) ';
-[fitresult, gof] = LinearFit_general(handles.temp_arr, handles.voltage_arr,VFAT3_NUMBER,title,x_label,y_label,handles.axes1)
+legend_title ='SensorOut(mV)';
 
+[fitresult, gof] = LinearFit_general(handles.temp_arr, handles.voltage_arr,VFAT3_NUMBER,title,legend_title,x_label,y_label,handles.axes1)
+else 
+    errordlg('You need at least two data points to plot!','Error');
+end
+    
 
 
 
@@ -319,9 +326,14 @@ reply=sync_chip();
 handles.reply = reply;
 if reply == 58
 set(handles.hard_reset, 'String', 'connected');
- chip_id = num2str(read_register(hex2dec('00010003'),0));
- set(handles.chip_id_text, 'String', horzcat('Chip ID :',chip_id));
- handles.chip_id = chip_id; 
+IREF = AdjustIref();
+ handles.IREF = IREF;
+ set(handles.iref_text, 'String', handles.IREF);
+ chip_id = read_register(hex2dec('00010003'),0);
+ handles.id = chip_id;
+ set(handles.id_text, 'String',handles.id);
+  
+ 
 else
     set(handles.hard_reset, 'String', 'No reply');
 end
@@ -339,7 +351,7 @@ d= erase(d,'-');
 d= erase(d,'#');
 d= erase(d,' ');
 
-folderName = horzcat(handles.selected_dir,'/results/vfat3_',num2str(handles.chip_id));% define a folder name for every chip programatically
+folderName = horzcat(handles.selected_dir,'/results/vfat3_',num2str(handles.id));% define a folder name for every chip programatically
 [parentFolder deepestFolder] = fileparts(folderName);
 TempCalibSubFolder = sprintf('%s/TempCalib', folderName);% define a scurve subfolder
 % Finally, create the folder if it doesn't exist already.
@@ -347,7 +359,7 @@ if ~exist(TempCalibSubFolder, 'dir')
   mkdir(TempCalibSubFolder);
 end
 
-filename = horzcat(TempCalibSubFolder,'/TempCalib_',num2str(handles.chip_id),'_',d,'.xlsx');
+filename = horzcat(TempCalibSubFolder,'/TempCalib_',num2str(handles.id),'_',d,'.xlsx');
 
 %fileID   = fopen(filename,'w');
 plot_data=horzcat(handles.temp_arr',handles.voltage_arr');
@@ -393,3 +405,26 @@ function edit_browse_CreateFcn(hObject, eventdata, handles)
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
+
+
+% --- Executes on button press in Close.
+
+% hObject    handle to Close (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+% --- Executes on button press in pushbutton8.
+
+% hObject    handle to pushbutton8 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+% --- Executes on button press in pushbutton9.
+function pushbutton9_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton9 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+close all;

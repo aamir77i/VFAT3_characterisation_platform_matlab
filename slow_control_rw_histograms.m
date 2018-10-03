@@ -30,7 +30,7 @@ D1 = uint16(23);
 D2 = uint16(200);
 DELAY = uint8(1);
 calpulse = uint8(1);
-arm_dac = uint8(180);
+arm_dac = uint8(100);
 %start_fc = -2.0 2
 %stop_fc = 20.0 ;
 
@@ -42,7 +42,7 @@ HARD =uint8(255);
 sc_hw = SOFT;
 %% read chip id
 %read_register_multiple(address,NUM_OF_READS)
-NUM_OF_READS=1000;% x 1000 times
+NUM_OF_READS=1;% x 1000 times
 address= hex2dec('00010003');
 %for num = 1: NUM_OF_READS
 % ID =  read_register_multiple(hex2dec('00010003'),NUM_OF_READS);  
@@ -59,7 +59,7 @@ fopen(t);
 
 fwrite(t,sc);
 for i=1:NUM_OF_READS
-A(:,i) = uint8(fread(t,4*1000));
+A(:,i) = uint8(fread(t,1000*4));
 
 end
 temp = reshape(A,[4*1000*NUM_OF_READS,1]);
@@ -102,6 +102,7 @@ text(double(x1),double(y1),str1);
 xlabel('Readback ChipIDs');
 ylabel('# of Occurences');
 title('ChipID read histogram');
+mismatches=find(read_data~=id)
 % %% Adjust IREF 
 % [IREF] = AdjustIref();
 % 

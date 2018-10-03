@@ -10,9 +10,9 @@ A = uint8(fread(t,4));
 fclose(t);
 
 IREF=A(1);
-ADC= double(uint16( 256*uint16(A(4))+ uint16(A(3))))*0.0625;
-    formatSpec = 'IREF = %d , adc = %5.2f \n';
+%ADC= double(uint16( 256*uint16(A(4))+ uint16(A(3))))*0.0625;
+  %  formatSpec = 'IREF = %d , adc = %5.2f \n';
 
-fprintf(formatSpec,IREF,ADC);
+%fprintf(formatSpec,IREF,ADC);
 end
 

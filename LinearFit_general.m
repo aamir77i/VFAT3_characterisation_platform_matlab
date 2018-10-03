@@ -1,4 +1,4 @@
-function [fitresult, gof] = LinearFit_general(x, y,VFAT3_NUMBER,Title,x_label,y_label,handles_axes)
+function [fitresult, gof] = LinearFit_general(x, y,VFAT3_NUMBER,Title,legend_title,x_label,y_label,handles_axes)
 %CREATEFIT2(CHARGE,CAL_DAC)
 %  Create a fit.
 %
@@ -29,7 +29,7 @@ cla;
 % Plot fit with data.
 %figure( 'Name', 'LinearFit' );
 h = plot( fitresult, xData, yData );
-legend( h, Title, 'LinearFit', 'Location', 'NorthEast' );
+legend( h, legend_title, 'LinearFit', 'Location', 'NorthEast' );
 % Label axes
 xlabel (x_label);
 ylabel (y_label);
@@ -42,7 +42,7 @@ ymax = (1.1 * max(yData));% 20 % more y scale
 axis([xmin   xmax ymin ymax] );
 
 
-str0 = ['',VFAT3_NUMBER];
+str0 = ['Chip ID : ',VFAT3_NUMBER];
 str1 = ['',num2str(date)];
 str2 = [ 'Y = p1*X + p2 (p1:',num2str(round(fitresult.p1,2)),',','p2:',num2str(round(fitresult.p2,2)),')'];
 

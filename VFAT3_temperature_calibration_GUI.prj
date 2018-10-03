@@ -1,0 +1,139 @@
+<deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
+  <configuration file="\\cern.ch\dfs\Users\a\airshad\Documents\MATLAB\VFAT3_characterisation_platform_matlab\VFAT3_temperature_calibration_GUI.prj" location="\\cern.ch\dfs\Users\a\airshad\Documents\MATLAB\VFAT3_characterisation_platform_matlab" name="VFAT3_temperature_calibration_GUI" target="target.ezdeploy.standalone" target-name="Application Compiler">
+    <param.appname>temperature_calibration</param.appname>
+    <param.icon />
+    <param.icons />
+    <param.version>1.0</param.version>
+    <param.authnamewatermark>Aamir</param.authnamewatermark>
+    <param.email>aamir.irshad@cern.ch</param.email>
+    <param.company>CERN</param.company>
+    <param.summary>gui to calibrate internal temp sensor of vfat3</param.summary>
+    <param.description />
+    <param.screenshot>${PROJECT_ROOT}\combined dist comparison.jpg</param.screenshot>
+    <param.guid />
+    <param.installpath.string>\CERN\temperature_calibration\</param.installpath.string>
+    <param.installpath.combo>option.installpath.programfiles</param.installpath.combo>
+    <param.logo />
+    <param.install.notes />
+    <param.target.install.notes />
+    <param.intermediate>${PROJECT_ROOT}\VFAT3_temperature_calibration_GUI\for_testing</param.intermediate>
+    <param.files.only>${PROJECT_ROOT}\VFAT3_temperature_calibration_GUI\for_redistribution_files_only</param.files.only>
+    <param.output>${PROJECT_ROOT}\VFAT3_temperature_calibration_GUI\for_redistribution</param.output>
+    <param.logdir>${PROJECT_ROOT}\VFAT3_temperature_calibration_GUI</param.logdir>
+    <param.enable.clean.build>false</param.enable.clean.build>
+    <param.user.defined.mcr.options />
+    <param.target.type>subtarget.standalone</param.target.type>
+    <param.support.packages />
+    <param.web.mcr>true</param.web.mcr>
+    <param.package.mcr>false</param.package.mcr>
+    <param.no.mcr>false</param.no.mcr>
+    <param.web.mcr.name>MyAppInstaller_web</param.web.mcr.name>
+    <param.package.mcr.name>MyAppInstaller_mcr</param.package.mcr.name>
+    <param.no.mcr.name>MyAppInstaller_app</param.no.mcr.name>
+    <param.windows.command.prompt>true</param.windows.command.prompt>
+    <param.create.log>false</param.create.log>
+    <param.log.file />
+    <param.native.matlab>false</param.native.matlab>
+    <param.checkbox>false</param.checkbox>
+    <param.example />
+    <param.help.text />
+    <unset>
+      <param.icon />
+      <param.icons />
+      <param.version />
+      <param.authnamewatermark />
+      <param.email />
+      <param.company />
+      <param.description />
+      <param.guid />
+      <param.installpath.string />
+      <param.installpath.combo />
+      <param.logo />
+      <param.install.notes />
+      <param.target.install.notes />
+      <param.intermediate />
+      <param.files.only />
+      <param.output />
+      <param.logdir />
+      <param.enable.clean.build />
+      <param.user.defined.mcr.options />
+      <param.target.type />
+      <param.support.packages />
+      <param.web.mcr />
+      <param.package.mcr />
+      <param.no.mcr />
+      <param.web.mcr.name />
+      <param.package.mcr.name />
+      <param.no.mcr.name />
+      <param.windows.command.prompt />
+      <param.create.log />
+      <param.log.file />
+      <param.native.matlab />
+      <param.checkbox />
+      <param.example />
+      <param.help.text />
+    </unset>
+    <fileset.main>
+      <file>${PROJECT_ROOT}\temperature_calibration.m</file>
+    </fileset.main>
+    <fileset.resources />
+    <fileset.package />
+    <fileset.depfun>
+      <file>${PROJECT_ROOT}\AdjustIref.m</file>
+      <file>${PROJECT_ROOT}\LinearFit_general.m</file>
+      <file>${PROJECT_ROOT}\Read_Internal_temp.m</file>
+      <file>${PROJECT_ROOT}\read_register.m</file>
+      <file>${PROJECT_ROOT}\sync_chip.m</file>
+    </fileset.depfun>
+    <build-deliverables>
+      <file location="${PROJECT_ROOT}\VFAT3_temperature_calibration_GUI\for_testing" name="temperature_calibration.exe" optional="false">\\cern.ch\dfs\Users\a\airshad\Documents\MATLAB\VFAT3_characterisation_platform_matlab\VFAT3_temperature_calibration_GUI\for_testing\temperature_calibration.exe</file>
+      <file location="${PROJECT_ROOT}\VFAT3_temperature_calibration_GUI\for_testing" name="splash.png" optional="false">\\cern.ch\dfs\Users\a\airshad\Documents\MATLAB\VFAT3_characterisation_platform_matlab\VFAT3_temperature_calibration_GUI\for_testing\splash.png</file>
+      <file location="${PROJECT_ROOT}\VFAT3_temperature_calibration_GUI\for_testing" name="readme.txt" optional="true">\\cern.ch\dfs\Users\a\airshad\Documents\MATLAB\VFAT3_characterisation_platform_matlab\VFAT3_temperature_calibration_GUI\for_testing\readme.txt</file>
+    </build-deliverables>
+    <workflow />
+    <matlab>
+      <root>H:\MATLAB\R2018a</root>
+      <toolboxes>
+        <toolbox name="fixedpoint" />
+        <toolbox name="matlabcoder" />
+        <toolbox name="matlabhdlcoder" />
+        <toolbox name="embeddedcoder" />
+      </toolboxes>
+      <toolbox>
+        <fixedpoint>
+          <enabled>true</enabled>
+        </fixedpoint>
+      </toolbox>
+      <toolbox>
+        <matlabcoder>
+          <enabled>true</enabled>
+        </matlabcoder>
+      </toolbox>
+      <toolbox>
+        <matlabhdlcoder>
+          <enabled>true</enabled>
+        </matlabhdlcoder>
+      </toolbox>
+      <toolbox>
+        <embeddedcoder>
+          <enabled>true</enabled>
+        </embeddedcoder>
+      </toolbox>
+    </matlab>
+    <platform>
+      <unix>false</unix>
+      <mac>false</mac>
+      <windows>true</windows>
+      <win2k>false</win2k>
+      <winxp>false</winxp>
+      <vista>false</vista>
+      <linux>false</linux>
+      <solaris>false</solaris>
+      <osver>6.1</osver>
+      <os32>false</os32>
+      <os64>true</os64>
+      <arch>win64</arch>
+      <matlab>true</matlab>
+    </platform>
+  </configuration>
+</deployment-project>

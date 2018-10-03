@@ -1,4 +1,4 @@
-function [A] = sync_chip()
+function [A] = sync_chip_dpa()
 %UNTITLED3 Summary of this function goes here
 %   Detailed explanation goes here
 sync  = [202 0 2 ]';

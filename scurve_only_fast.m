@@ -26,18 +26,18 @@ Peaking_time = "45"; % 15 25 36 45
 Pre_Gain =  "HG"  ;% LG MG HG  
 start_chan = 0 ;stop_chan = 127 ;step_chan = 1 ;
 Latency = uint16(20);
-LV1As   = uint16(100);
+LV1As   = uint16(1000);
 D1 = uint16(23);
 D2 = uint16(200);
 DELAY = uint8(1);
 calpulse = uint8(1);
-arm_dac = uint8(180);
+arm_dac = uint8(60);
 %start_fc = -2.0 2
 %stop_fc = 20.0 ;
 
 num_of_channels = ( (stop_chan - start_chan)/step_chan)+1;
 %% connect  hard reset chip
-sync_chip();
+a=sync_chip()
 SOFT =uint8(0);
 HARD =uint8(255);
 sc_hw = SOFT;
@@ -73,8 +73,8 @@ fclose(t);
 
  
 Max_Caldac = floor(Lfit_charge(0));
-start_fc = 10.0 ;
-stop_fc = Max_Caldac;
+start_fc = 0.0 ;
+stop_fc = 8.0;
 
 fc_arr = double(start_fc:step_fc:stop_fc)
 fc_size = size(fc_arr,2)
@@ -251,7 +251,7 @@ st=1;stp=128;
 subplot(3,2,5);
 plot(mean_enc,'r-o');
 
-axis([st stp 0 (M_O_mean_ENC +.25)]);
+axis([st stp 0 (M_O_mean_ENC +.45)]);
 str = ['\mu: ', num2str(round(M_O_mean_ENC,3)),'fC (',num2str(round(M_O_mean_ENC * 6241.51)),'e)' ];
 text(50,.05,str);
 str = ['\sigma: ',num2str(round(M_O_mean_ENC_std,3)),'fC (',num2str(round(M_O_mean_ENC_std* 6241.51)),'e)'];

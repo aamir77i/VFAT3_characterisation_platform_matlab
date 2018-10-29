@@ -22,19 +22,19 @@ ft = fittype( '0.5 * erf( (x-a)/(sqrt(2)*b) ) + 0.5', 'independent', 'x', 'depen
 opts = fitoptions( 'Method', 'NonlinearLeastSquares' );
 opts.Algorithm = 'Levenberg-Marquardt';
 opts.Display = 'Off';
-opts.StartPoint =[2 .2];% [1 0.18];
+opts.StartPoint = [2 .5];%[2 .2];
 
 % Fit model to data.
 [fitresult, gof] = fit( xData, yData, ft, opts );
 
-% % Plot fit with data.
-% figure( 'Name', 'erf_fit' );
-%h = plot( fitresult, xData, yData );
- %legend( h, 'y vs. x', 'erf_fit', 'Location', 'NorthEast' );
-% % Label axes
-%legend off
-% xlabel charge
-% ylabel occupancy
-% grid on
+% % % Plot fit with data.
+%  figure( 'Name', 'erf_fit' );
+% h = plot( fitresult, xData, yData );
+% legend( h, 'y vs. x', 'erf_fit', 'Location', 'NorthEast' );
+%  % Label axes
+% legend off
+%  xlabel charge
+%  ylabel occupancy
+%  grid on
 
 

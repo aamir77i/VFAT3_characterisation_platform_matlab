@@ -14,7 +14,7 @@ switch Peaking_time
     case "25"
         TP_FE = 1;
         
-    case "36"
+    case "35"
         TP_FE = 3;
         
     case "45"

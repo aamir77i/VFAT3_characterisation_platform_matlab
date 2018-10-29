@@ -69,7 +69,7 @@ fclose(t);
 %% 
 id  = read_register(hex2dec('00010003'),sc_hw);
  chip_id = strcat('Programmed ChipID = ',num2str(read_register(hex2dec('00010003'),sc_hw)))
- VFAT3_NUMBER = chip_id;
+ VFAT3_NUMBER = chip_id
 % VFAT3_NU  MBER= 'VFAT3-TEST';
 %end
 %%

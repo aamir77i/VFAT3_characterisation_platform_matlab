@@ -1,7 +1,7 @@
 function [milliVolts] =  Read_Internal_temp()
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
-%% Adjust IREF 
+%% 
 command  = [202 255 12 ]';
 t = tcpip('192.168.1.10',7);
 fopen(t);
